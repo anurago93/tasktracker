@@ -1,0 +1,35 @@
+<%= if @current_user do %>
+  <div class="row">
+    <div class="col">
+      <span><%= link "Create New Task", to: task_path(@conn, :new) %></span>
+    </div>
+  </div>
+<% end %>
+
+<h1 class="tasks">Assigned Tasks</h1>
+
+<%= if @tasks !== [] do %>
+    <%=Enum.map @tasks, fn task -> %>
+    <div class="row tasks">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title title"><%= task.title %></h6>
+            <p class="list"><b>Description:</b> <%= task.description %></p>
+            <p class="list"><b>Assigned To:</b> <%= task.createdBy %></p>
+            <p class="list"><b>Time Spent:</b> <%= task.time %> minutes</p>
+            <p class="list"><b>Completed:</b> <%= task.completed %></p>
+            <p class="row">
+            <span class="buttons"><%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-primary btn-xs" %></span>
+            <span class="buttons"><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-primary btn-xs" %></span>
+            <span class="buttons"><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-default btn-danger btn-xs" %></span>
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+<% else %>
+<h6 class="no_task"> No Tasks To Show </h6>
+<% end %>
+
